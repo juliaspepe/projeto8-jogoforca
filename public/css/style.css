@@ -1,0 +1,99 @@
+.container {
+display: flex;
+justify-content: center;
+margin-top: 20px;
+}
+
+img {
+   width: 400px;
+   height: 400px;
+}
+
+.buttonEscolherPalavra {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 160px;
+   height: 40px;
+   background-color: rgb(55, 148, 55);
+   border-radius: 10px;
+   color: white;
+   font-weight: bold;
+   margin-left: 100px;
+   margin-top: 30px;
+   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.containerLetras {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.letras {
+   display: flex;
+   justify-content: center;
+   width: 600px;
+   height: 90px;
+   margin-top: 40px;
+   flex-wrap: wrap;
+}
+
+.letra {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 40px;
+   height: 40px;
+   background-color: rgb(29, 150, 248);
+   border-radius: 10px;
+   color: white;
+   font-weight: bold;
+   margin: 2px;
+   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.containerInferior {
+   display: flex;
+   justify-content: center;
+}
+
+.footer {
+   width: 520px;
+   display:flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-top: 18px;
+}
+
+.footer p {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.footer input {
+   width: 300px;
+   height: 30px;
+   border-radius: 5px;
+}
+
+.chutar {
+   width: 80px;
+   height: 40px;
+   background-color:rgb(55, 148, 55);
+   color: white;
+   border-radius: 10px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-weight: bold;
+   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.chutar:hover,
+.letra:hover,
+.buttonEscolherPalavra:hover {
+   cursor: hand; 
+   cursor: pointer;
+   }
