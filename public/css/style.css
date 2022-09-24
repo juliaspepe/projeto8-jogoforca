@@ -24,6 +24,36 @@ img {
    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+.palavraEscolhida {
+   margin-top: 20px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 30px;
+}
+
+.palavra {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.classeAcertou {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: rgb(55, 148, 55);
+   font-weight: bold;
+}
+
+.classeErrou {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: red;
+   font-weight: bold;
+}
+
 .containerLetras {
    display: flex;
    align-items: center;
@@ -35,7 +65,7 @@ img {
    justify-content: center;
    width: 600px;
    height: 90px;
-   margin-top: 40px;
+   margin-top: 25px;
    flex-wrap: wrap;
 }
 
@@ -97,3 +127,17 @@ img {
    cursor: hand; 
    cursor: pointer;
    }
+
+.semClick {
+   pointer-events: none;
+   width: 80px;
+   height: 40px;
+   background-color:rgb(55, 148, 55);
+   color: white;
+   border-radius: 10px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-weight: bold;
+   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

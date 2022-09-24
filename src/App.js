@@ -1,4 +1,4 @@
-import Palavras from "./Palavras"
+// import Palavras from "./Palavras"
 import forca0 from "./img/forca0.png"
 import forca1 from "./img/forca1.png"
 import forca2 from "./img/forca2.png"
@@ -6,38 +6,125 @@ import forca3 from "./img/forca3.png"
 import forca4 from "./img/forca4.png"
 import forca5 from "./img/forca5.png"
 import forca6 from "./img/forca6.png"
+import { useState } from "react"
+import Botao from "./Botao"
+import palavras from "./palavras"
 
 export default function App() {
+
     const alfabeto = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    const [letra, setLetra] = useState("")
+    const [palavra, setPalavra] = useState("")
+    const [palavraNaArray, setPalavraNaArray] = useState("")
+    const [exibirPalavra, setExibirPalavra] = useState("")
+    const [imgForca, setImgForca] = useState(forca0)
+    const [j, setJ] = useState(1)
+    const [classPalavra, setClassPalavra] = useState("palavra")
+    const [desabilitarBotao, setDesabilitarBotao] = useState(false)
+    const [chute, setChute] = useState("")
+    const [inputDesabilitado, setInputDesabilitado] = useState(true)
+    const [chutarDesabilitado, setChutarDesabilitado] = useState(true)
 
-    function escolherPalavra(){
-        alert ("oi")
+    const imagensForca = [forca0, forca1, forca2, forca3, forca4, forca5, forca6]
+
+    function escolherPalavra() {
+            setImgForca(forca0)
+            setClassPalavra("palavra")
+            setDesabilitarBotao(true)
+            setInputDesabilitado(false)
+            setChutarDesabilitado(false)
+
+            let palavraAleatoria = (Math.floor(Math.random() * palavras.length));
+            let palavraNova = palavras[palavraAleatoria]
+            setPalavra(palavraNova)
+
+            let transformarEmArry = palavraNova.split('')
+            setPalavraNaArray(transformarEmArry)
+            console.log(transformarEmArry)
+
+            let substituir = transformarEmArry.map((i) => transformarEmArry[i] = " _")
+            setExibirPalavra(substituir)
+            console.log(substituir)
     }
 
-    function escolherLetra(){
-        alert("oi")
+    function escolherLetra(a) {
+        setLetra(a)
+        compararLetras(a)
     }
 
-    function chutar(){
-        alert ("oi")
+    function chutar() {
+        if (chute === "") {
+            return (alert("escreve uma palavra aí, amigo! em branco não vale :)"))
+        }
+        if (chute === palavra) {
+            setExibirPalavra(palavra)
+            setClassPalavra("classeAcertou")
+            setDesabilitarBotao(false)
+            setInputDesabilitado(true)
+            setChute("")
+            setChutarDesabilitado(true)
+        } else {
+            setExibirPalavra(palavra)
+            setClassPalavra("classeErrou")
+            setImgForca(imagensForca[6])
+            setDesabilitarBotao(false)
+            setInputDesabilitado(true)
+            setChute("")
+            setChutarDesabilitado(true)
+        }
+    }
+
+    function compararLetras(a) {
+        let arr = [];
+        for (let i = 0; i < palavra.length; i++) {
+            if (a === palavraNaArray[i]) {
+                arr.push(i)
+                exibirPalavra[i] = a
+            }
+        }
+        if (arr.length === 0) {
+            setJ(j + 1)
+            setImgForca(imagensForca[j]);
+        }
+
+        if (exibirPalavra.join('') === palavra) {
+            setClassPalavra("classeAcertou")
+            setDesabilitarBotao(false)
+            setInputDesabilitado(true)
+            setChutarDesabilitado(true)
+            setJ(1)
+        }
+
+        if (j === 6) {
+            setExibirPalavra(palavra)
+            setClassPalavra("classeErrou")
+            setDesabilitarBotao(false)
+            setInputDesabilitado(true)
+            setChutarDesabilitado(true)
+            setJ(1)
+        }
+
     }
 
     return (
         <div>
             <div className="container">
-                <img src={forca0} />
-                <div onClick={escolherPalavra} className="buttonEscolherPalavra">Escolher Palavra</div>
+                <img src={imgForca} />
+                <button disabled={desabilitarBotao} onClick={escolherPalavra} className="buttonEscolherPalavra">Escolher Palavra</button>
+            </div>
+            <div className="palavraEscolhida">
+                <div className={classPalavra}>{exibirPalavra}</div>
             </div>
             <div className="containerLetras">
-                <div onClick={escolherLetra} className="letras">
-                    {alfabeto.map((a) => <p className="letra">{a}</p>)}
+                <div className="letras">
+                    {alfabeto.map((a, index) => <Botao parametro={a} i={index} escolherLetra={escolherLetra} />)}
                 </div>
             </div>
             <div className="containerInferior">
                 <div className="footer">
                     <p>Já sei a palavra!</p>
-                    <input type="text" name="input"></input>
-                    <div onClick={chutar} className="chutar">Chutar</div>
+                    <input type="text" disabled={inputDesabilitado} value={chute} onChange={e => setChute(e.target.value)}></input>
+                    <button disabled={chutarDesabilitado} onClick={chutar} className="chutar">Chutar</button>
                 </div>
             </div>
         </div >
