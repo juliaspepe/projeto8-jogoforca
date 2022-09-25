@@ -13,10 +13,13 @@ import palavras from "./palavras"
 export default function App() {
 
     const alfabeto = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
     const [letra, setLetra] = useState("")
     const [palavra, setPalavra] = useState("")
+    console.log(palavra)
     const [palavraNaArray, setPalavraNaArray] = useState("")
     const [exibirPalavra, setExibirPalavra] = useState("")
+    console.log(exibirPalavra);
     const [imgForca, setImgForca] = useState(forca0)
     const [j, setJ] = useState(1)
     const [classPalavra, setClassPalavra] = useState("palavra")
@@ -24,27 +27,31 @@ export default function App() {
     const [chute, setChute] = useState("")
     const [inputDesabilitado, setInputDesabilitado] = useState(true)
     const [chutarDesabilitado, setChutarDesabilitado] = useState(true)
+    const [trocaDeLetra, setTrocaDeLetra] = useState("");
+    const [disablebuttons, setDisablebuttons] = useState(true);
+    const [disable, setDisable] = useState(false)
+    const [desabilitarBotaoIniciar, setDesabilitarBotaoIniciar] = useState(true)
 
     const imagensForca = [forca0, forca1, forca2, forca3, forca4, forca5, forca6]
 
     function escolherPalavra() {
-            setImgForca(forca0)
-            setClassPalavra("palavra")
-            setDesabilitarBotao(true)
-            setInputDesabilitado(false)
-            setChutarDesabilitado(false)
+        setDisablebuttons(false)
+        setDesabilitarBotao(true)
+        setImgForca(forca0)
+        setClassPalavra("palavra")
+        setInputDesabilitado(false)
+        setChutarDesabilitado(false)
+        setDisable(false)
 
-            let palavraAleatoria = (Math.floor(Math.random() * palavras.length));
-            let palavraNova = palavras[palavraAleatoria]
-            setPalavra(palavraNova)
+        let palavraAleatoria = (Math.floor(Math.random() * palavras.length));
+        let palavraNova = (palavras[palavraAleatoria]).normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+        setPalavra(palavraNova)
 
-            let transformarEmArry = palavraNova.split('')
-            setPalavraNaArray(transformarEmArry)
-            console.log(transformarEmArry)
+        let transformarEmArry = palavraNova.split('')
+        setPalavraNaArray(transformarEmArry)
 
-            let substituir = transformarEmArry.map((i) => transformarEmArry[i] = " _")
-            setExibirPalavra(substituir)
-            console.log(substituir)
+        let substituir = transformarEmArry.map((i) => transformarEmArry[i] = " _")
+        setExibirPalavra(substituir)
     }
 
     function escolherLetra(a) {
@@ -59,18 +66,20 @@ export default function App() {
         if (chute === palavra) {
             setExibirPalavra(palavra)
             setClassPalavra("classeAcertou")
-            setDesabilitarBotao(false)
             setInputDesabilitado(true)
             setChute("")
             setChutarDesabilitado(true)
+            setDisablebuttons(true)
+            setDesabilitarBotaoIniciar(false)
         } else {
             setExibirPalavra(palavra)
             setClassPalavra("classeErrou")
             setImgForca(imagensForca[6])
-            setDesabilitarBotao(false)
             setInputDesabilitado(true)
             setChute("")
             setChutarDesabilitado(true)
+            setDisablebuttons(true)
+            setDesabilitarBotaoIniciar(false)
         }
     }
 
@@ -89,35 +98,47 @@ export default function App() {
 
         if (exibirPalavra.join('') === palavra) {
             setClassPalavra("classeAcertou")
-            setDesabilitarBotao(false)
             setInputDesabilitado(true)
             setChutarDesabilitado(true)
             setJ(1)
+            setDisablebuttons(true)
+            setDesabilitarBotaoIniciar(false)
         }
 
         if (j === 6) {
             setExibirPalavra(palavra)
             setClassPalavra("classeErrou")
-            setDesabilitarBotao(false)
             setInputDesabilitado(true)
             setChutarDesabilitado(true)
             setJ(1)
+            setDisablebuttons(true);
+            setDesabilitarBotaoIniciar(false)
         }
 
+    }
+
+    function novoJogo() {
+        window.location.reload()
+        setDesabilitarBotao(false)
     }
 
     return (
         <div>
             <div className="container">
                 <img src={imgForca} />
-                <button disabled={desabilitarBotao} onClick={escolherPalavra} className="buttonEscolherPalavra">Escolher Palavra</button>
-            </div>
-            <div className="palavraEscolhida">
-                <div className={classPalavra}>{exibirPalavra}</div>
+                <div className="botoes">
+                    <button disabled={desabilitarBotao} onClick={escolherPalavra} className="buttonEscolherPalavra">Escolher Palavra</button>
+                    <button disabled={desabilitarBotaoIniciar} onClick={novoJogo} className="buttonNovoJogo">Novo Jogo</button>
+                    <div className="palavraEscolhida">
+                        <div className={classPalavra}>{exibirPalavra}</div>
+                    </div>
+                </div>
             </div>
             <div className="containerLetras">
                 <div className="letras">
-                    {alfabeto.map((a, index) => <Botao parametro={a} i={index} escolherLetra={escolherLetra} />)}
+                    {alfabeto.map((a, index) => <Botao disable={disable} setDisable={setDisable}
+                        disablebuttons={disablebuttons} setDisablebuttons={setDisablebuttons}
+                        parametro={a} i={index} escolherLetra={escolherLetra} />)}
                 </div>
             </div>
             <div className="containerInferior">

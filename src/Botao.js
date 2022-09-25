@@ -1,20 +1,30 @@
-import { useState } from "react"
-
+import { useState, useEffect } from "react"
 
 export default function Botao(props) {
-const [disable, setDisable] = useState(false)
-
+    const [disable, setDisable] = useState(false)
     function desabilitarBotao() {
         if (disable === false) {
             setDisable(true)
-        } 
+        }
     }
 
     return (
-        <button disabled={disable} key={props.i} className="letra" onClick={() => {
+        <>
+        {props.disablebuttons ? (
+            <button disabled={props.disablebuttons} key={props.i} className="letra" onClick={() => {
+                props.escolherLetra(props.parametro)
+                desabilitarBotao()
+                (()=> {
+                    props.Disablebuttons(!props.disablebuttons)
+                })
+            }
+            }>{props.parametro}</button>)
+         : ( <button disabled={disable} key={props.i} className="letra" onClick={() => {
             props.escolherLetra(props.parametro)
             desabilitarBotao()
         }
-        }>{props.parametro}</button>
-    )
+        }>{props.parametro}</button> )
+    }
+    </>)
 }
+

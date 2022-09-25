@@ -24,8 +24,23 @@ img {
    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+.buttonNovoJogo {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 160px;
+   height: 40px;
+   background-color: red;
+   border-radius: 10px;
+   color: white;
+   font-weight: bold;
+   margin-left: 100px;
+   margin-top: 30px;
+   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
 .palavraEscolhida {
-   margin-top: 20px;
+   margin-top: 210px;
    display: flex;
    justify-content: center;
    align-items: center;
